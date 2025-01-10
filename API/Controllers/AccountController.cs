@@ -33,6 +33,22 @@ public class AccountController(DataContext context) : BaseApiController
         return newUser;
     }
 
+    [HttpPut("update")]
+    public async Task<ActionResult<User>> UpdateUser(UpdateDto updateDto)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(x => x.Username.ToLower() == updateDto.Username.ToLower());
+
+        if (user == null) return NotFound("User not found");
+
+        user.MobileNo = updateDto.MobileNo;
+        user.Email = updateDto.Email;
+
+        context.Users.Update(user);
+        await context.SaveChangesAsync();
+
+        return user;
+    }
+
     private async Task<bool> UserExists(string username)
     {
         return await context.Users.AnyAsync(x => x.Username.ToLower() == username.ToLower());
