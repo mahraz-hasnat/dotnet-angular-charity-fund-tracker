@@ -1,0 +1,13 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace API.DTOs;
+
+public class RegisterDto
+{
+    [MaxLength(100)]
+    public required string Username { get; set; }
+    public required string MobileNo { get; set; }
+    public string? Email { get; set; }
+    public required string Password { get; set; }
+}
