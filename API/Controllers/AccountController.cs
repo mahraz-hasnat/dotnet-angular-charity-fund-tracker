@@ -1,4 +1,3 @@
-using System;
 using System.Security.Cryptography;
 using System.Text;
 using API.Data;
@@ -30,7 +29,7 @@ public class AccountController(DataContext context) : BaseApiController
         context.Users.Add(newUser);
         await context.SaveChangesAsync();
 
-        return newUser;
+        return Created("User created", newUser);
     }
 
     [HttpPut("update")]
@@ -46,7 +45,7 @@ public class AccountController(DataContext context) : BaseApiController
         context.Users.Update(user);
         await context.SaveChangesAsync();
 
-        return user;
+        return Ok(user);
     }
 
     private async Task<bool> UserExists(string username)
