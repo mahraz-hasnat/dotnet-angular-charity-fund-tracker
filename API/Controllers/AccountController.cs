@@ -32,6 +32,24 @@ public class AccountController(DataContext context) : BaseApiController
         return Created("User created", newUser);
     }
 
+    [HttpPost("login")]
+    public async Task<ActionResult<User>> Login(LoginDto loginDto)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(x => x.Username.ToLower() == loginDto.Username.ToLower());
+
+        if (user == null) return Unauthorized("Invalid username");
+
+        if (String.IsNullOrEmpty(Encoding.UTF8.GetString(user.PasswordHash)) || String.IsNullOrEmpty(Encoding.UTF8.GetString(user.PasswordSalt)))
+        {
+            return Unauthorized("This user is not valid. Please register again.");
+        }
+
+        if (!VerifyPasswordHash(loginDto.Password, user.PasswordHash, user.PasswordSalt))
+            return Unauthorized("Invalid password");
+        else
+            return Ok(user);
+    }
+
     [HttpPut("update")]
     public async Task<ActionResult<User>> UpdateUser(UpdateDto updateDto)
     {
@@ -46,6 +64,20 @@ public class AccountController(DataContext context) : BaseApiController
         await context.SaveChangesAsync();
 
         return Ok(user);
+    }
+
+    private static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+    {
+        using var hmac = new HMACSHA512(passwordSalt);
+
+        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+        for (int i = 0; i < computedHash.Length; i++)
+        {
+            if (computedHash[i] != passwordHash[i]) return false;
+        }
+
+        return true;
     }
 
     private async Task<bool> UserExists(string username)
