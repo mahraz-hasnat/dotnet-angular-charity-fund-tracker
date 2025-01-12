@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -29,7 +30,11 @@ namespace API.Controllers
         [HttpPost("create")]
         public async Task<ActionResult> CreatePayment(PaymentDto paymentDto)
         {
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == paymentDto.UserId);
             if (paymentDto.Amount <= 0) return BadRequest("Amount must be greater than 0");
+            if (user == null) return BadRequest("Invalid User");
+            //if (paymentDto.UserId != context.Users.FirstOrDefaultAsync(x => )) return BadRequest("Invalid User");
+            //if (paymentDto.UserId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) return Unauthorized();
             var payment = new Payment
             {
                 UserId = paymentDto.UserId,
