@@ -8,7 +8,8 @@ using SQLitePCL;
 
 namespace API.Controllers
 {
-    [Authorize]
+    //[Authorize]
+    [AllowAnonymous]
     public class UsersController(DataContext context) : BaseApiController
     {
         [HttpGet]

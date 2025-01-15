@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [Authorize]
+    //[Authorize]
+    [AllowAnonymous]
     public class PaymentsController(DataContext context) : BaseApiController
     {
         [HttpGet]
