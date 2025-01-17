@@ -24,4 +24,9 @@ export class NavComponent {
       error: (error) => console.log(error),
     });
   }
+
+  logout() {
+    //this.accountService.logout();
+    this.loggedIn = false;
+  }
 }

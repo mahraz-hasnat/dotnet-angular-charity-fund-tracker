@@ -1,14 +1,27 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <div class="container">
     <a class="navbar-brand">O11 Charity</a>
-    <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="loggedIn">
+    @if (loggedIn) {
+    <ul class="navbar-nav me-auto mb-2 mb-md-0">
       <li class="nav-item">
         <a class="nav-link">Dashboard</a>
       </li>
       <li class="nav-item">
         <a class="nav-link">Payments</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()">Logout</a>
+      </li>
     </ul>
+    } @if ( loggedIn ) {
+    <div class="dropdown">
+      <a class="dorpdown-toggle text-light">Welcome user</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item">Profile</a>
+        <a class="dropdown-item" (click)="logout()">Logout</a>
+      </div>
+    </div>
+    } @if (!loggedIn) {
     <form
       #loginForm="ngForm"
       (ngSubmit)="login()"
@@ -31,5 +44,6 @@
       />
       <button class="btn btn-outline-success" type="submit">Login</button>
     </form>
+    }
   </div>
 </nav>
