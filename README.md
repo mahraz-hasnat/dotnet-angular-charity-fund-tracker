@@ -30,8 +30,8 @@ Charity Fund Tracker is a web application designed to manage and track charity f
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/charity-fund-tracker.git
-   cd charity-fund-tracker/backend
+   https://github.com/mahraz-hasnat/dotnet-angular-charity-fund-tracker.git
+   cd API
    ```
 2. Restore .NET dependencies:
    ```bash
@@ -56,7 +56,7 @@ Charity Fund Tracker is a web application designed to manage and track charity f
 
 1. Navigate to the frontend directory:
    ```bash
-   cd charity-fund-tracker/frontend
+   cd client
    ```
 2. Install dependencies:
    ```bash
