@@ -16,7 +16,7 @@ import { HomeComponent } from './home/home.component';
 })
 export class AppComponent implements OnInit {
   http = inject(HttpClient);
-  private accountService = inject(AccountService);
+  accountService = inject(AccountService);
   title = 'O11Charity App';
   users: any;
 
