@@ -84,6 +84,55 @@ public class AccountController(DataContext context, ITokenService tokenService) 
         return true;
     }
 
+    // [HttpPut("change-password")]
+    // public async Task<ActionResult<User>> ChangePassword(ChangePasswordDto changePasswordDto)
+    // {
+    //     var user = await context.Users.FirstOrDefaultAsync(x => x.Username.ToLower() == changePasswordDto.Username.ToLower());
+
+    //     if (user == null) return NotFound("User not found");
+
+    //     using var hmac = new HMACSHA512();
+
+    //     user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(changePasswordDto.NewPassword));
+    //     user.PasswordSalt = hmac.Key;
+
+    //     context.Users.Update(user);
+    //     await context.SaveChangesAsync();
+
+    //     return Ok(user);
+    // }
+
+    [HttpDelete("delete")]
+    public async Task<ActionResult> DeleteUser(string username)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
+
+        if (user == null) return NotFound("User not found");
+
+        context.Users.Remove(user);
+        await context.SaveChangesAsync();
+
+        return Ok("User deleted");
+    }
+
+    // [HttpPut("forgot-password")]
+    // public async Task<ActionResult<User>> ForgotPassword(ForgotPasswordDto forgotPasswordDto)
+    // {
+    //     var user = await context.Users.FirstOrDefaultAsync(x => x.Username.ToLower() == forgotPasswordDto.Username.ToLower());
+
+    //     if (user == null) return NotFound("User not found");
+
+    //     using var hmac = new HMACSHA512();
+
+    //     user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(forgotPasswordDto.NewPassword));
+    //     user.PasswordSalt = hmac.Key;
+
+    //     context.Users.Update(user);
+    //     await context.SaveChangesAsync();
+
+    //     return Ok(user);
+    // }
+
     private async Task<bool> UserExists(string username)
     {
         return await context.Users.AnyAsync(x => x.Username.ToLower() == username.ToLower());
