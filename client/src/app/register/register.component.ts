@@ -1,8 +1,8 @@
-import { NgFor } from '@angular/common';
-import { Component, inject, Input, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
 import { User } from '../_models/user';
+
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -11,7 +11,8 @@ import { User } from '../_models/user';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  usersfromhome = input.required<any>();
+  //usersfromhome = input.required<User[]>();
+  cancelRegister = output<boolean>();
   accountService = inject(AccountService);
   model: any = {};
 
@@ -19,12 +20,13 @@ export class RegisterComponent {
     this.accountService.register(this.model).subscribe({
       next: (response) => {
         console.log(response);
+        this.cancel();
       },
       error: (error) => console.log(error),
     });
   }
 
   cancel() {
-    console.log('cancelled');
+    this.cancelRegister.emit(false);
   }
 }

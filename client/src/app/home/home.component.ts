@@ -15,11 +15,15 @@ export class HomeComponent implements OnInit {
   users: any;
 
   ngOnInit(): void {
-    this.getUsers();
+    //his.getUsers();
   }
 
   registerToggle() {
     this.registerMode = !this.registerMode;
+  }
+
+  cancelRegisterMode(event: boolean) {
+    this.registerMode = event;
   }
 
   getUsers() {
