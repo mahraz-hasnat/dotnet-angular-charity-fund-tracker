@@ -13,6 +13,14 @@
     />
     <label>Username</label>
   </div>
+  <div class="mb-3">
+    <label>Who do you know here?</label>
+    <select class="form-select">
+      @for (user of usersfromhome(); track $index) {
+      <option value="{{ user.id }}">{{ user.username }}</option>
+      }
+    </select>
+  </div>
   <div class="mb-3 form-floating">
     <input
       type="text"
