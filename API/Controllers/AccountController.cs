@@ -12,7 +12,7 @@ namespace API.Controllers;
 public class AccountController(DataContext context, ITokenService tokenService) : BaseApiController
 {
     [HttpPost("register")]
-    public async Task<ActionResult<User>> Register(RegisterDto user)
+    public async Task<ActionResult<UserDto>> Register(RegisterDto user)
     {
         if (await UserExists(user.Username)) return BadRequest("Username is taken");
 
@@ -30,7 +30,11 @@ public class AccountController(DataContext context, ITokenService tokenService) 
         context.Users.Add(newUser);
         await context.SaveChangesAsync();
 
-        return Created("User created", newUser);
+        return new UserDto
+        {
+            Username = user.Username,
+            Token = tokenService.CreateToken(newUser)
+        };
     }
 
     [HttpPost("login")]
