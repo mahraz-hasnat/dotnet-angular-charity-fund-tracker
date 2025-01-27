@@ -5,8 +5,10 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './payments.component.html',
-  styleUrl: './payments.component.css'
+  styleUrl: './payments.component.css',
 })
 export class PaymentsComponent {
-
+  btnAddPayment() {
+    console.log('Add Payment');
+  }
 }
